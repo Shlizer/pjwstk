@@ -1,6 +1,6 @@
 package pl.ayz.shlizer.pjwstk.dao;
 
-public interface UnitOfWork {
+public interface UOW {
 
 	public void markNew(EntityBase ent, UnitOfWorkDao dao);
 	public void markDeleted(EntityBase ent, UnitOfWorkDao dao);

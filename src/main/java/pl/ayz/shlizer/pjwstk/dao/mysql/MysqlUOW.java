@@ -8,15 +8,22 @@ import java.util.Map;
 
 import pl.ayz.shlizer.pjwstk.dao.EntityBase;
 import pl.ayz.shlizer.pjwstk.dao.DBOperation;
-import pl.ayz.shlizer.pjwstk.dao.UnitOfWork;
+import pl.ayz.shlizer.pjwstk.dao.UOW;
 import pl.ayz.shlizer.pjwstk.dao.UnitOfWorkDao;
 
-public class MysqlUnitOfWork implements UnitOfWork {
+/***********************************************************
+ * MysqlMain
+ * Klasa abstrakcyjna, po której dziedzicz¹ elementy modelu bazy danych
+ * 
+ * @author Shlizer
+ */
+
+public class MysqlUOW implements UOW {
 
 	private Map<EntityBase, UnitOfWorkDao> tasks;
 	private Connection connection;
 	
-	public MysqlUnitOfWork() {
+	public MysqlUOW() {
 		tasks = new HashMap<EntityBase, UnitOfWorkDao>();
 		connection = getConnection();
 	}
