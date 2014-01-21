@@ -9,7 +9,7 @@ import java.util.Map;
 import pl.ayz.shlizer.pjwstk.dao.EntityBase;
 import pl.ayz.shlizer.pjwstk.dao.DBOperation;
 import pl.ayz.shlizer.pjwstk.dao.UOW;
-import pl.ayz.shlizer.pjwstk.dao.UnitOfWorkDao;
+import pl.ayz.shlizer.pjwstk.dao.UOWDao;
 
 /***********************************************************
  * MysqlMain
@@ -20,15 +20,15 @@ import pl.ayz.shlizer.pjwstk.dao.UnitOfWorkDao;
 
 public class MysqlUOW implements UOW {
 
-	private Map<EntityBase, UnitOfWorkDao> tasks;
+	private Map<EntityBase, UOWDao> tasks;
 	private Connection connection;
 	
 	public MysqlUOW() {
-		tasks = new HashMap<EntityBase, UnitOfWorkDao>();
+		tasks = new HashMap<EntityBase, UOWDao>();
 		connection = getConnection();
 	}
 	
-	private Connection getConnection() {
+	public Connection getConnection() {
 		try
 		{
 			if(connection==null||connection.isClosed()) {
@@ -55,17 +55,17 @@ public class MysqlUOW implements UOW {
 		return connection;
 	}
 
-	public void markNew(EntityBase ent, UnitOfWorkDao dao) {
+	public void markNew(EntityBase ent, UOWDao dao) {
 		ent.setOperation(DBOperation.insert);
 		tasks.put(ent, dao);
 	}
 
-	public void markDeleted(EntityBase ent, UnitOfWorkDao dao) {
+	public void markDeleted(EntityBase ent, UOWDao dao) {
 		ent.setOperation(DBOperation.delete);
 		tasks.put(ent, dao);
 	}
 
-	public void markUpdated(EntityBase ent, UnitOfWorkDao dao) {
+	public void markUpdated(EntityBase ent, UOWDao dao) {
 		ent.setOperation(DBOperation.update);
 		tasks.put(ent, dao);
 	}

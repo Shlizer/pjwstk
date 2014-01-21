@@ -1,6 +1,6 @@
 package pl.ayz.shlizer.pjwstk.dao;
 
-public interface UnitOfWorkDao {
+public interface UOWDao {
 
 	public void persistAdd(EntityBase ent);
 	public void persistDelete(EntityBase ent);

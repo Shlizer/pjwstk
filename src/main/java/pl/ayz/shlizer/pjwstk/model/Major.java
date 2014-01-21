@@ -6,6 +6,10 @@ public class Major extends EntityBase {
 
 	private String name;
 
+	public Major(int id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return name;
 	}
