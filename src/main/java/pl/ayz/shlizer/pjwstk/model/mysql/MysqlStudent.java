@@ -3,12 +3,11 @@ package pl.ayz.shlizer.pjwstk.model.mysql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import pl.ayz.shlizer.pjwstk.dao.EntityBase;
 import pl.ayz.shlizer.pjwstk.dao.mysql.MysqlUOW;
 import pl.ayz.shlizer.pjwstk.model.Major;
 import pl.ayz.shlizer.pjwstk.model.Student;
 
-public class MysqlStudent extends MysqlMain {
+public class MysqlStudent extends MysqlMain<Student> {
 
 	public MysqlStudent(MysqlUOW uow) {
 		super(uow);
@@ -31,7 +30,7 @@ public class MysqlStudent extends MysqlMain {
 
 	@Override
 	protected String getInsertQuery() {
-		return "INSERT INTO client(id,name,surname,major) VALUES (NULL,?,?,?)";
+		return "INSERT INTO Student(id,name,surname,major) VALUES (NULL,?,?,?)";
 	}
 
 	@Override
@@ -42,18 +41,18 @@ public class MysqlStudent extends MysqlMain {
 	}
 
 	@Override
-	protected void setInsertQuery(EntityBase ent) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	protected void setInsertQuery(Student s) throws SQLException {
+		update.setString(1, s.getName());
+		update.setString(2, s.getSurname());
+		update.setInt(3, s.getMajor().getId());
 	}
 
 	@Override
-	protected void setUpdateQuery(Student ent) throws SQLException {
-		update.setString(1, ent.getName());
-		update.setString(2, ent.getSurname());
-		//update.setString(3, ent.getEmail());
-		//update.setString(4, ent.getNumber());
-		update.setInt(5, ent.getId());
+	protected void setUpdateQuery(Student s) throws SQLException {
+		update.setString(1, s.getName());
+		update.setString(2, s.getSurname());
+		update.setInt(3, s.getMajor().getId());
+		update.setInt(4, s.getId());
 	}
 
 	@Override

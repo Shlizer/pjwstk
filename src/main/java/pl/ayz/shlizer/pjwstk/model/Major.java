@@ -2,10 +2,20 @@ package pl.ayz.shlizer.pjwstk.model;
 
 import pl.ayz.shlizer.pjwstk.dao.EntityBase;
 
+/***********************************************************
+ * Major
+ * Klasa reprezentuj¹ca tabelê kierunków w Javie
+ * 
+ * @author Shlizer
+ */
+
 public class Major extends EntityBase {
 
 	private String name;
 
+	public Major() {
+	}
+	
 	public Major(int id) {
 		this.id = id;
 	}

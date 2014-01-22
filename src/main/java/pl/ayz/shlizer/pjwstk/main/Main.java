@@ -8,8 +8,8 @@ public class Main {
 
 	public static void main(String[] args) {
 			MysqlUOW uow = new MysqlUOW();
-			//MysqlStudent dao = new MysqlStudent(uow);
-		System.out.println("koniec");
+			MysqlStudent dao = new MysqlStudent(uow);
+			System.out.println("koniec");
 	}
 
 }

@@ -2,6 +2,13 @@ package pl.ayz.shlizer.pjwstk.model;
 
 import pl.ayz.shlizer.pjwstk.dao.EntityBase;
 
+/***********************************************************
+ * Mark
+ * Klasa reprezentuj¹ca tabelê ocen w Javie
+ * 
+ * @author Shlizer
+ */
+
 public class Mark extends EntityBase {
 
 	private Student student;

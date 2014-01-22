@@ -1,5 +1,14 @@
 package pl.ayz.shlizer.pjwstk.dao;
 
+
+/***********************************************************
+ * EntityBase
+ * Klasa abstrakcyjna, po której dziedzicz¹ elementy modelu bazy danych
+ * Reprezentacja zapytania, powo³uj¹c siê na obiekt tabeli w Javie
+ * 
+ * @author Shlizer
+ */
+
 public abstract class EntityBase {
 
 	protected int id;

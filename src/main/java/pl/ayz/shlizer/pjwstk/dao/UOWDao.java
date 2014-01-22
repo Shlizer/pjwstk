@@ -1,8 +1,9 @@
 package pl.ayz.shlizer.pjwstk.dao;
 
+
 public interface UOWDao {
 
-	public void persistAdd(EntityBase ent);
-	public void persistDelete(EntityBase ent);
-	public void persistUpdate(EntityBase ent);
+	public void execAdd(EntityBase e);
+	public void execDelete(EntityBase e);
+	public void execUpdate(EntityBase e);
 }

@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import pl.ayz.shlizer.pjwstk.dao.EntityBase;
 import pl.ayz.shlizer.pjwstk.dao.DBOperation;
+import pl.ayz.shlizer.pjwstk.dao.EntityBase;
 import pl.ayz.shlizer.pjwstk.dao.UOW;
 import pl.ayz.shlizer.pjwstk.dao.UOWDao;
 
 /***********************************************************
  * MysqlMain
- * Klasa abstrakcyjna, po której dziedzicz¹ elementy modelu bazy danych
+ * Klasa obs³uguj¹ca po³¹czenie z baz¹ i obs³ugê transakcji
  * 
  * @author Shlizer
  */
@@ -43,31 +43,31 @@ public class MysqlUOW implements UOW {
 			}
 			
 		}
-		catch(SQLException ex)
+		catch(SQLException err)
 		{
-			ex.printStackTrace();
+			err.printStackTrace();
 		}
-		catch(Exception e) {  // brak klasy sterownika
+		catch(Exception err) {  // brak klasy sterownika
         	System.out.println("Brak klasy sterownika");
-         	System.out.println(e);
+         	System.out.println(err);
          	System.exit(1);
 		}
 		return connection;
 	}
 
-	public void markNew(EntityBase ent, UOWDao dao) {
-		ent.setOperation(DBOperation.insert);
-		tasks.put(ent, dao);
+	public void markNew(EntityBase e, UOWDao dao) {
+		e.setOperation(DBOperation.insert);
+		tasks.put(e, dao);
 	}
 
-	public void markDeleted(EntityBase ent, UOWDao dao) {
-		ent.setOperation(DBOperation.delete);
-		tasks.put(ent, dao);
+	public void markDeleted(EntityBase e, UOWDao dao) {
+		e.setOperation(DBOperation.delete);
+		tasks.put(e, dao);
 	}
 
-	public void markUpdated(EntityBase ent, UOWDao dao) {
-		ent.setOperation(DBOperation.update);
-		tasks.put(ent, dao);
+	public void markUpdated(EntityBase e, UOWDao dao) {
+		e.setOperation(DBOperation.update);
+		tasks.put(e, dao);
 	}
 
 	public void commit() {
@@ -75,12 +75,33 @@ public class MysqlUOW implements UOW {
 		
 		try {
 			connection.setAutoCommit(false);
-		
+
+			for(EntityBase e : tasks.keySet() )
+			{
+				switch(e.getOperation())
+				{
+					case insert:
+					{
+						tasks.get(e).execAdd(e);
+					}
+					case delete:
+					{
+						tasks.get(e).execDelete(e);
+					}
+					case update:
+					{
+						tasks.get(e).execUpdate(e);
+					}
+					default:
+						break;
+				}
+			}
+				
 			connection.setAutoCommit(true);
 			connection.commit();
 		}
-		catch(SQLException e) {
-			e.printStackTrace();
+		catch(SQLException err) {
+			err.printStackTrace();
 		}
 	}
 
@@ -91,8 +112,8 @@ public class MysqlUOW implements UOW {
 				connection=null;
 			}
 		}
-		catch(SQLException e) {
-			e.printStackTrace();
+		catch(SQLException err) {
+			err.printStackTrace();
 		}
 	}
 
